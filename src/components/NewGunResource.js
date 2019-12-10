@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import { getUUID } from "nicks-gun-utils";
+import { getUUID, qs } from "nicks-gun-utils";
 
-export const NewGunResource = ({ Gun, gun, next }) => {
+export const NewGunResource = ({ gun, next, oepriv }) => {
   const newId = useRef(null);
   const protectWrite = useRef(null);
   const protectRead = useRef(null);
@@ -28,10 +28,15 @@ export const NewGunResource = ({ Gun, gun, next }) => {
           }
 
           const pair = await SEA.pair();
-          let hash = `#priv=${pair.priv}`;
+          const pair2 = await SEA.pair();
+          const o = { priv: pair.priv };
           if (protectRead.current.checked) {
-            hash += `&epriv=${pair.epriv}`;
+            o.epriv = pair.epriv;
           }
+          if (oepriv) {
+            o.oepriv = pair2.epriv;
+          }
+          const hash = qs(o, "#");
           window.location.href = `${next}?id=~${pair.pub}${hash}`;
         }}
       >

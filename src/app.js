@@ -10,7 +10,7 @@ const App = () => {
 
   useEffect(() => {
     const gun = Gun({
-      peers: ["https://gunjs.herokuapp.com/gun", "http://nmr.io:8765/gun"],
+      peers: ["https://gunjs.herokuapp.com/gun", "http://nmr.io:8765/gun"]
     });
     setGun(gun);
   }, []);
@@ -21,8 +21,9 @@ const App = () => {
 
   const urlParams = new URLSearchParams(window.location.search);
   const next = urlParams.get("next");
+  const oepriv = urlParams.get("oepriv");
 
-  return <NewGunResource Gun={Gun} gun={gun} next={next} />;
+  return <NewGunResource Gun={Gun} gun={gun} next={next} oepriv={oepriv} />;
 };
 
 export default hot(App);
